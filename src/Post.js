@@ -1,4 +1,4 @@
-import React from "react";
+import React, { forwardRef } from "react";
 import "./Post.css";
 import { Avatar } from "@material-ui/core";
 import VerifiedUserIcon from "@material-ui/icons/VerifiedUser";
@@ -7,27 +7,28 @@ import RepeatIcon from "@material-ui/icons/RepeatOutlined";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import PublishIcon from "@material-ui/icons/Publish";
 
-function Post({ displayName, username, verified, text, image, avatar }) {
+const Post = forwardRef(({ displayName, username, verified, text, image, avatar }, ref) => {
     return (
-        <div className="post">
+        <div className="post" ref={ref}>
             <div className="post__avatar">
-                <Avatar src="https://www.thestatesman.com/wp-content/uploads/2017/08/1493458748-beauty-face-517.jpg" />
+                <Avatar src={avatar} />
             </div>
             <div className="post__body">
                 <div className="post__header">
                     <div className="post__headerText">
                         <h3>
-                            Tom M{" "}
+                            {displayName}{" "}
                             <span className="post__headerSpecial">
-                                <VerifiedUserIcon className="post__badge" />
+                                {verified && <VerifiedUserIcon className="post__badge" />} @
+                                {username}
                             </span>
                         </h3>
                     </div>
                     <div className="post__headerDescription">
-                        <p>I challenge you to build a twitter clone</p>
+                        <p>{text}</p>
                     </div>
                 </div>
-                <img src="https://media.giphy.com/media/kEVjjnOEmDCTm6alkt/giphy.gif" alt="" />
+                <img src={image} alt="" />
                 <div className="post__footer">
                     <ChatBubble fontSize="small" />
                     <RepeatIcon fontSize="small" />
@@ -37,6 +38,6 @@ function Post({ displayName, username, verified, text, image, avatar }) {
             </div>
         </div>
     );
-}
+});
 
 export default Post;
